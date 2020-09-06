@@ -28,7 +28,7 @@ tools can be used.
 
 ## Introduction
 
-This is a screenshot of SNES game Super Mario World. Mario shows it’s universally
+This is a screenshot of SNES game Super Mario World. Mario shows itâ€™s universally
 famous suit: red and blue.
 
 ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_screenshot.png)
@@ -49,7 +49,7 @@ a resource like [Super Mario World Central](https://www.smwcentral.net/),
 where there are several posts explaining the memory map of SMW ROMS. 
 Other resources could be checked also.
 
-But let’s imagine SMWC does not exist, nor other resource. Only assumption is
+But letâ€™s imagine SMWC does not exist, nor other resource. Only assumption is
 that: every inch of the game must be contained in the ROM, including the color
 palette. So if the correct byte is changed, Mario suite colors will change.
 I.e: supposing Mario's suit colors are encoded as RGB values, there will
@@ -111,7 +111,7 @@ stored in a log for further research.
 
 The content of the script is as follows:
 
-```
+```bash
 #!/bin/bash
 
 ROM=./smw.sfc
@@ -186,7 +186,7 @@ be enough for tools to detect such small change in the color.
 ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_color_test.png)
 
 The source code implementing such rules are as follows:
-```
+```C
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -259,7 +259,7 @@ are used.
 
 First, the content of the script, and then a more detailed explanation:
 
-```
+```bash
 #!/bin/bash
 
 ROM=./smw.sfc
@@ -388,7 +388,7 @@ mentioned tools:
     this ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_diff_result.png) as a result.
 	
 - The goal is to discover which bytes contains the Mario's color palette, ignoring
-    the rest. that’s the reason only "average error" values between 0 and 300
+    the rest. thatâ€™s the reason only "average error" values between 0 and 300
     are reported. Otherwise, when the bytes containing the background palette
     (or other palettes) are changed, they will be reported also, producing
     noise.
@@ -422,10 +422,11 @@ $> bash hack_smw_rom.bsh
 A single instance
 of the script will do the work. However, several instances of the script can be launched: in different virtual
 machines, distributed across different computers, etc. The following line
-from "hack_smw_rom.bsh" is the only one that would need to be changed
-'''
+from "hack_smw_rom.bsh" is the only one that would need to be changed:
+
+```
 for ((index=0;index<$number_of_bytes - 1;index++))
-'''
+```
 
 Modifying the index start and index end, two computers for example could test
 at the same time half of the bytes. Another possible scenario is with 32 [Raspberry Pi](https://www.raspberrypi.org/)
@@ -458,7 +459,7 @@ the ROM (in its original state) with an hex editor, then browsing the 0x34CF byt
 changing it manually to the desired value, and opening the modified ROM with
 snes9x.
 
-![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/swm_mario_yellowcap.png)
+![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/swm_mario_yellowcap.png) As it can be seen, now Mario's cap is partially yellow.
 
 With this results, its easy to determine at least the start of the bytes
 containing the color palette. A couple more of tests, and it can be established
