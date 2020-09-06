@@ -49,7 +49,7 @@ a software tool to hack Super Mario World ROMs, among others. And it works prett
 But it could be done also modifying directly the bytes of the ROM itself. 
 The assumption is that everything about the game -physics, logic, sprites,
 color palettes- is contained in the ROM. So the bytes specifying the color
-of Mario suite are also contained in the ROM. **This is, indeed, true.**
+of Mario's suit are also contained in the ROM. **This is, indeed, true.**
 
 Which ones? The bytes implementing the color palette could be found using
 a resource like [Super Mario World Central](https://www.smwcentral.net/), 
@@ -58,7 +58,7 @@ Other resources could be checked also.
 
 But let’s imagine SMWC does not exist, nor other resource. Only assumption is
 that: every inch of the game must be contained in the ROM, including the color
-palette. So if the correct byte is changed, Mario suite colors will change.
+palette. So if the correct byte is changed, Mario's suit colors will change.
 I.e: supposing Mario's suit colors are encoded as RGB values, there will
 be a place in the ROM where the sequence 0xFF 0x00 0x00 will appear. And changing
 the byte 0xFF to 0x33, for example, will change the color of Mario.
