@@ -161,6 +161,7 @@ the "nibble_swapper.exe" and the call to "take_screenshot.bsh" script.
 
 **nibble_swapper.exe**, as it name implies, swaps the High nibble and the Low nibble 
 of a byte, following certain rules:
+
     Rule 1) If both nibbles are equal, each nibble is increased by 0x08, applying
             and "overflow" operation if the result is higher than 0xFF. 
     Rule 2) If nibbles are different, the high nibble becomes the lower, 
