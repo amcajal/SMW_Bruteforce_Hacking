@@ -16,12 +16,19 @@ tools can be used.
 
 ## Index
 [Introduction](#introduction)
-[Hack overview](#hack overview)
-[Required tools](#required tools)
-[Main script](#main script)
-[Swapping Nibbles](#swapping nibbles)
-[Taking snapshots](#taking snapshots)
-[Start brute force process](#start brute force process)
+
+[Hack overview](#hack_overview)
+
+[Required tools](#required_tools)
+
+[Main script](#main_script)
+
+[Swapping Nibbles](#swapping_nibbles)
+
+[Taking screenshots](#taking_screenshots)
+
+[Brute force process](#bruteforce_process)
+
 [Result](#result)
 
 ---
@@ -61,7 +68,7 @@ the byte 0xFF to 0x33, for example, will change the color of Mario.
 Those bytes are initially unknown (their memory addresses), so **all of them need
 to be tested** -this is the brute force approach.
 
-## Hack overview
+## Hack_overview
 
 Process is straightforward:
 - Change first byte of the ROM
@@ -79,7 +86,7 @@ to test all bytes, in the best of cases.
 
 So this process is automated.
 
-## Required tools
+## Required_tools
 
 The automation has been performed in different GNU/Linux OS, and requires the installation
 of the following tools:
@@ -97,7 +104,7 @@ And of course, the ROM of Super Mario World (SNES). **WARNING: all this operatio
 are performed using the USA version of the ROM.** Link to ROM is not provided
 to avoid legal problems.
 
-## Main script
+## Main_script
 
 The "hack_smw_rom.bsh" script is the "main" script or "entry point" 
 of the Super Mario World ROM
@@ -150,7 +157,7 @@ echo "SMWRH: Testing all Super Mario World ROM bytes --- COMPLETE"
 The script itself is very straightforward. Key parts here are the call to
 the "nibble_swapper.exe" and the call to "take_screenshot.bsh" script.
 
-## Swapping Nibbles
+## Swapping_Nibbles
 
 **nibble_swapper.exe**, as it name implies, swaps the High nibble and the Low nibble 
 of a byte, following certain rules:
@@ -250,7 +257,7 @@ follows:
 $> gcc -Wall -g -O0 -o nibble_swapper.exe nibble_swapper.c
 ```
 
-## Taking screenshots
+## Taking_screenshots
 
 Script **take_screenshot.bsh**, on the other hand, performs all the "human operations" required
 to check if the byte that has just been changed by "nibble_swapper.exe" is one of those containing
@@ -413,7 +420,7 @@ The ones in the script are those that work in the author's computer,
 taking into account that emulator is configured to run at the same speed
 than the original system (the physical SNES).
 
-## Start brute force process
+## Bruteforce_process
 
 With everything set and done, "hack_smw_rom.bsh" can be launched. 
 ```
