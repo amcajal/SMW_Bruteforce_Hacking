@@ -1,0 +1,96 @@
+#!/bin/bash
+################################################################################
+#   Project: SMW Bruteforce Hacking
+#
+#   File: take_screenshot.bsh
+#
+#   Description:
+#       This script launches Snes9x with Super Mario World ROM, takes a snapshot 
+#       of a specific screen with Mario (the one at the beginning of the game, 
+#       showing the "Welcome! This is Dinosaur Land" message), and
+#       closes the emulator again.
+#
+#   Notes:
+#       Number of keystrokes, delays duration and screenshot coordinates
+#       MAY VARY from one system to another (i.e: depending at which speed 
+#       the emulator is set, the screen resolution options, etc)
+#       The ones in the script are those that work in the author's computer,
+#       taking into account that emulator is configured to run at the same speed
+#       than the original system (the physical SNES).
+#
+#   Contact: Alberto Martin Cajal, amartin.glimpse23<AT>gmail.com
+#
+#   URL: https://github.com/amcajal/SMW_Bruteforce_Hacking
+#
+#   License: GNU GPL v3.0
+#
+#   Copyright (C) 2020 Alberto Martin Cajal
+#
+#   This file is part of SMW Bruteforce Hacking.
+#
+#   SMW Bruteforce Hacking is free software: 
+#   you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   SMW Bruteforce Hacking is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+ROM=./smw.sfc
+SCSNAME=./images/mario.png # SCS stands for ScreenShot. SS was not appropiate
+CUTNAME=./images/mario_cut.png
+BASECUT=./images/smw_mario_base.png
+BYTE_INDEX=$1 # This, provided by other script, is just for results printing
+
+###############################################################################
+
+#Launch emulator and fork
+snes9x $ROM & >> /dev/null
+
+#Get ID of the emulator window
+sleep 1
+window_id=$(xdotool search --name MARIOWORLD)
+
+#Wait required seconds to send Enter keys
+sleep 6
+
+#Send Enter keys to the emulator to start game
+# We send 5 times an Enter key, to ensure
+# the start of the gameplay
+for i in {1..5}; do
+	xdotool key --window $window_id Return
+	sleep 0.5
+done
+
+#Wait required seconds for Mario to appear in the image
+sleep 4
+
+#Take screenshot
+import -window $window_id $SCSNAME
+
+#Close emulator
+for in in {1..3}; do
+	xdotool key --window $window_id Escape
+	sleep 1
+done
+
+#Cut image, and get only the required part
+convert $SCSNAME -crop 40x50+250+340 $CUTNAME
+
+#Compare with the base cut
+#Here is where mathematics starts: Using the Average Error
+# (ae) metric, we want to be informed when an ae bigger than
+# 0 but less than 300 is detected. 
+dif=$(compare -metric ae $CUTNAME $BASECUT result.png 2>&1 | awk '{print $1}')
+if [[ $dif>0 && $dif<=300 ]]
+then
+	# This provides the core information: the byte that causes such AE"
+	echo "$BYTE_INDEX:$dif"
+fi

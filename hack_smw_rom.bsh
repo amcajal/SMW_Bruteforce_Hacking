@@ -1,0 +1,74 @@
+#!/bin/bash
+################################################################################
+#   Project: SMW Bruteforce Hacking
+#
+#   File: hack_smw_rom.bsh
+#
+#   Description:
+#       This is the "main" script or "entry point" of the Super Mario World ROM
+#       hacking process. It automates the "human procedure" to discover
+#       wich bytes contains the colour palette of Mario.
+#       Basically, it iterates over all the bytes, chaning them according to the
+#       "nibble_swapper" rules; then takes a specific screenshot of the game
+#       where Mario appears, and checks if Mario's suit changed (all of this
+#       performed by "take_screenshot" script); finally, these results are
+#       stored in a log for further research.
+#
+#   Notes: N/A
+#
+#   Contact: Alberto Martin Cajal, amartin.glimpse23<AT>gmail.com
+#
+#   URL: https://github.com/amcajal/SMW_Bruteforce_Hacking
+#
+#   License: GNU GPL v3.0
+#
+#   Copyright (C) 2020 Alberto Martin Cajal
+#
+#   This file is part of SMW Bruteforce Hacking.
+#
+#   SMW Bruteforce Hacking is free software: 
+#   you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   SMW Bruteforce Hacking is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+################################################################################
+
+ROM=./smw.sfc
+NIBBLE_SWAPPER=./nibble_swapper.exe
+SCREENSHOT_SCRIPT=./take_screenshot.bsh
+RESULTS_FILE=./smw_hacking_results_$(date +%s).txt
+###############################################################################
+
+echo "SMWRH: Testing all Super Mario World ROM bytes"
+
+# Get number number of ROM bytes.
+number_of_bytes=$(ls -l $ROM | awk '{print $5}')
+echo "Number of bytes to test: $number_of_bytes"
+
+# Iterate over all ROM bytes. Index starts at 0, because first call
+# to fseek shall use a zero offset (that is, first byte on the ROM).
+for ((index=0;index<$number_of_bytes - 1;index++))
+do
+	# Yes, this "echo" is incorrect, but its only purpose
+	# is to provide feedback to the user.
+	echo ">>> SMWRH: Testing byte $index out of $number_of_bytes"
+
+	# Change the byte value
+	$NIBBLE_SWAPPER $ROM $index
+
+	# Take screenshot and check the result
+	bash $SCREENSHOT_SCRIPT >> $RESULTS_FILE
+
+	# Revert byte value change
+	$NIBBLE_SWAPPER $ROM $index
+done
+
+echo "SMWRH: Testing all Super Mario World ROM bytes --- COMPLETE"
