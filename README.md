@@ -373,7 +373,7 @@ mentioned tools:
 	cutting the selection, and then checking the size of the selection (also on GIMP).
 	In other words: coordinates and size can be obtained by performing the cut operation
 	manually with GIMP, and then transforming the data to ImageMagick operations.
-	What this does is turning the "welcome message" screenshot into this: ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_base.png)
+	What this does is turning the "welcome message" screenshot into this: ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_base_r.png)
 	This is the "mario_base.png" image. This is the image that will be
 	compared to, so it must be generated after the "hack_smw_rom.bsh" script is executed.
 	IMPORTANT: screenshot and "crop"s should be PNG format. Lossy compression formats,
@@ -390,10 +390,10 @@ mentioned tools:
 	something has changed.
     Command also generates a new image with the differences found between the
     two input images. For example:
-    Comparing this ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_base.png)
-    with this ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_mod_cut.png)
+    Comparing this ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_base_r.png)
+    with this ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_mod_cut_r.png)
     (note the change in Mario's cap) give
-    this ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_diff_result.png) as a result.
+    this ![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_diff_result_r.png) as a result.
 	
 - The goal is to discover which bytes contains the Mario's color palette, ignoring
     the rest. that’s the reason only "average error" values between 0 and 300
@@ -467,7 +467,7 @@ the ROM (in its original state) with an hex editor, then browsing the 0x34CF byt
 changing it manually to the desired value, and opening the modified ROM with
 snes9x.
 
-![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/swm_mario_yellowcap.png) As it can be seen, now Mario's cap is partially yellow.
+![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/swm_mario_yellowcap_r.png) As it can be seen, now Mario's cap is partially yellow.
 
 With this results, its easy to determine at least the start of the bytes
 containing the color palette. A couple more of tests, and it can be established
@@ -478,6 +478,6 @@ that the target bytes **starts at address 0x34CC**:
 Knowing the bytes containing the color palette, they can be modified at wise.
 It does not take long until Mario's is dressed as Wario:
 
-![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_as_wario.png)
+![](https://github.com/amcajal/SMW_Bruteforce_Hacking/blob/master/images/smw_mario_as_wario_r.png)
 
 **Mission accomplished.**
